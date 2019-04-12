@@ -29,6 +29,7 @@ class InvertedIndexWriter(InvertedIndex):
         file = open(self.index_file_path, 'ab+')
         self.terms.append(term)
         
+        
         #step 1
         encoded_posting_list = self.postings_encoding.encode(postings_list)
         
@@ -39,6 +40,8 @@ class InvertedIndexWriter(InvertedIndex):
                 
         self.postings_dict[term] = (postings_begin_position,number_of_postings_in_list,length_of_postings_list_in_bytes)  
         
+        #print("encoded posting",encoded_posting_list)
+        #print("postings_dict",self.postings_dict)
         #step3
         file.write(encoded_posting_list)
 

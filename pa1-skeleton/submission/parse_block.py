@@ -23,5 +23,5 @@ class BSBIIndex(BSBIIndex):
                 for s in f.read().split():
                     term_id = self.term_id_map.__getitem__(s)
                     td_pairs.append((term_id, doc_id))
-        print(td_pairs)
+        return td_pairs
         ### End your code
