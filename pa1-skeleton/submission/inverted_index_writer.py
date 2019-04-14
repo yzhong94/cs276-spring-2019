@@ -40,8 +40,6 @@ class InvertedIndexWriter(InvertedIndex):
                 
         self.postings_dict[term] = (postings_begin_position,number_of_postings_in_list,length_of_postings_list_in_bytes)  
         
-        #print("encoded posting",encoded_posting_list)
-        #print("postings_dict",self.postings_dict)
         #step3
         file.write(encoded_posting_list)
 

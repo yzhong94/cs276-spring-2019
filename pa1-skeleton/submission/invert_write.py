@@ -17,11 +17,12 @@ class BSBIIndex(BSBIIndex):
         #The result, an inverted index for the block we have just read, is then written to disk.
         
         #expected output: (term_id,[doc_id1, doc_id2])
-        #sorted_td_pairs = sorted(td_pairs, key=lambda tup: tup[1])
-        key_prev = -1
         ls = []
-        #posting = []
         posting = {}
+        
+        #posting_list=[]
+        
+        #sort the td_pairs
         sorted_td_pairs = sorted(td_pairs, key=lambda tup:(tup[0], tup[1]))
 
         for i in sorted_td_pairs:
@@ -34,25 +35,11 @@ class BSBIIndex(BSBIIndex):
                 posting[termID] = ls
             except:
                 posting[termID] = [docID]
-            '''
-            if key_prev == termID:
-                ls.append(docID)
-            elif key_prev != -1:
-                posting.append((key_prev,ls))
-                ls = []
-                ls.append(docID)
-
-            if i == len(sorted_td_pairs)-1:
-                print("in final check loop")
-                posting.append((termID,ls))
             
-            key_prev = termID
-            '''
+            
+            
         #write to disk
         for term in posting:
-            print("term",term)
             index.append(term,posting[term])
         
-        #print(self.terms)
-        print(posting)
         ### End your code

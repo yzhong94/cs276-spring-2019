@@ -11,7 +11,11 @@ class IdMap:
     def _get_str(self, i):
         """Returns the string corresponding to a given id (`i`)."""
         ### Begin your code
-        return self.id_to_str[i]
+        try:
+            return self.id_to_str[i]
+        except:
+            #if the id does not correspond to a string, return None
+            return None
         ### End your code
         
     def _get_id(self, s):
