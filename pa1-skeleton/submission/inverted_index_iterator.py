@@ -3,7 +3,9 @@ class InvertedIndexIterator(InvertedIndex):
     def __enter__(self):
         """Adds an initialization_hook to the __enter__ function of super class
         """
+#         print("entering a new iterator")
         super().__enter__()
+#         print(self.index_file)
         self._initialization_hook()
         return self
 
@@ -12,6 +14,7 @@ class InvertedIndexIterator(InvertedIndex):
         """
         ### Begin your code
         self.nums = 0
+        self.index_file.seek(0)
         ### End your code
 
     def __iter__(self): 
@@ -24,12 +27,45 @@ class InvertedIndexIterator(InvertedIndex):
         index file. In particular, you should not try to maintain the full 
         index file in memory.
         """
+        '''(start_position_in_index_file, 
+                                                  number_of_postings_in_list,
+                                                  length_in_bytes)'''
         ### Begin your code
-        try:
+        
+
+        '''
+        self.nums = self.nums + 1
+        print(self.index_file[0])
+        #print("in try, returning",(self.terms[self.nums], self.postings_list[self.nums]) )
+        '''
+
+#         print("index file", self.index_file)
+#         print("length of self.terms",len(self.terms))
+        if self.nums >= len(self.terms):
+            raise StopIteration
+        else:
+            super().__enter__()
+
+            term_ID = self.terms[self.nums]
+#             print("self.nums",self.nums)
+#             print("posting term", term_ID)
+#             print("posting meta data",self.postings_dict[term_ID])
+
+            start_position_in_index_file, number_of_postings_in_list,length_in_bytes = self.postings_dict[term_ID]
+            self.index_file.seek(start_position_in_index_file)
+            posting_list = UncompressedPostings.decode(self.index_file.read(length_in_bytes))
+
+            #print("current position of the stream",self.index_file.tell())
             self.nums = self.nums + 1
-            return self.terms[self.nums]
-        except:
-            self.__exit__()
+#             print("tuple",(term_ID,posting_list))
+            return (term_ID,posting_list)
+#         else:
+#             print("enterring else clause in __next__")
+#             self.__exit__(None, None, None)
+#             #
+
+                
+        #return (self.terms[self.nums], self.postings_list[self.nums])
         ### End your code
 
     def delete_from_disk(self):
