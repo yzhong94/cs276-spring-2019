@@ -18,7 +18,8 @@ class BSBIIndex(BSBIIndex):
         ### Begin your code
         td_pairs = []
         for filename in os.listdir(self.data_dir +'/'+ block_dir_relative):
-            with open(self.data_dir +'/'+ block_dir_relative +'/'+ filename, 'r') as f:
+            with open(self.data_dir +'/'+ block_dir_relative +'/'+ filename, 'r',encoding="utf8", errors='ignore') as f:
+                
                 doc_id = self.doc_id_map.__getitem__(filename)
                 for s in f.read().split():
                     term_id = self.term_id_map.__getitem__(s)

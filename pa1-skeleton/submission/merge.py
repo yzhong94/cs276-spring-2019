@@ -55,7 +55,7 @@ class BSBIIndex(BSBIIndex):
         posting_list.append((prev_termID, prev_docID))
 
         for i in posting_list:
-            print(i[0], i[1])
+            #print(i[0], i[1])
             merged_index.append(i[0],i[1])        
             
             
